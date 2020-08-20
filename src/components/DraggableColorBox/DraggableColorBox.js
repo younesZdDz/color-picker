@@ -20,12 +20,13 @@ function DraggableColorBox(props) {
       className={props.classes.root}
       style={{ backgroundColor: props.color }}
     >
-      {props.color}
+      {props.name}
     </div>
   );
 }
 DraggableColorBox.propTypes = {
   classes: PropTypes.object.isRequired,
   color: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
 };
 export default withStyles(styles)(DraggableColorBox);
