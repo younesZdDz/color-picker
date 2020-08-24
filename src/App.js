@@ -15,6 +15,7 @@ class App extends React.Component {
     this.state = { palettes: savedPalettes || seedColors };
     this.savePalette = this.savePalette.bind(this);
     this.findPalette = this.findPalette.bind(this);
+    this.deletePalette = this.deletePalette.bind(this);
   }
 
   findPalette(id) {
@@ -27,6 +28,16 @@ class App extends React.Component {
       this.syncLocalStorage,
     );
   }
+
+  deletePalette(id) {
+    this.setState(
+      state => ({
+        palettes: state.palettes.filter(palette => palette.id !== id),
+      }),
+      this.syncLocalStorage,
+    );
+  }
+
   syncLocalStorage() {
     //save palettes to local storage
     window.localStorage.setItem(
@@ -34,6 +45,7 @@ class App extends React.Component {
       JSON.stringify(this.state.palettes),
     );
   }
+
   render() {
     return (
       <Switch>
@@ -41,7 +53,11 @@ class App extends React.Component {
           exact
           path="/"
           render={routeProps => (
-            <PaletteList palettes={this.state.palettes} {...routeProps} />
+            <PaletteList
+              palettes={this.state.palettes}
+              {...routeProps}
+              deletePalette={this.deletePalette}
+            />
           )}
         />
         <Route
