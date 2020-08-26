@@ -8,7 +8,7 @@ import PaletteList from './components/PaletteList/PaletteList';
 import ColorPalette from './components/ColorPalette/ColorPalette';
 import PaletteForm from './components/PaletteForm/PaletteForm';
 import Page from './components/Page/Page';
-import './index.css';
+import './App.css';
 
 class App extends React.Component {
   constructor(props) {
