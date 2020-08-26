@@ -50,15 +50,16 @@
     "react-transition-group": "^4.4.1"
   },
   "devDependencies": {
-    "eslint-config-airbnb": "17.1.0",
-    "eslint-config-airbnb-base": "13.1.0",
-    "eslint-config-prettier": "4.1.0",
-    "eslint-plugin-import": "2.17.2",
-    "eslint-plugin-prettier": "3.0.1",
-    "eslint-plugin-react": "7.12.4",
-    "eslint-plugin-react-hooks": "1.6.0",
-    "lint-staged": "8.1.5",
-    "prettier": "1.17.0"
+    "eslint": "^7.7.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.6",
+    "eslint-plugin-react-hooks": "^4.1.0",
+    "lint-staged": "^10.2.13",
+    "prettier": "^2.1.1"
   },
   "browserslist": {
     "production": [
