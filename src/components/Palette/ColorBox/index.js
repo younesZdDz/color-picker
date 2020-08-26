@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/styles';
 import PropType from 'prop-types';
 import classNames from 'classnames';
 import styles from './styles';
+
 class ColorBox extends Component {
   constructor(props) {
     super(props);
@@ -41,7 +42,6 @@ class ColorBox extends Component {
               [classes.showMessage]: copied,
             })}
           >
-            {' '}
             <h1>copied!</h1>
             <p className={classes.copyText}>{background}</p>
           </div>
@@ -49,10 +49,12 @@ class ColorBox extends Component {
             <div className={classes.boxContent}>
               <span className={classes.colorName}>{name}</span>
             </div>
-            <button className={classes.copyButton}>Copy</button>
+            <button type="button" className={classes.copyButton}>
+              Copy
+            </button>
           </div>
           {showingFullPalette && (
-            <Link to={moreUrl} onClick={e => e.stopPropagation()}>
+            <Link to={moreUrl} onClick={(e) => e.stopPropagation()}>
               <span className={classes.seeMore}>MORE</span>
             </Link>
           )}

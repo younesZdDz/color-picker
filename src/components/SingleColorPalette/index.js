@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
-import ColorBox from '../ColorBox/ColorBox';
-import NavBar from '../NavBar/NavBar';
-import PaletteFooter from '../PaletteFooter/PaletteFooter';
+import ColorBox from '../Palette/ColorBox';
+import PaletteNavBar from '../Palette/PaletteNavBar';
+import PaletteFooter from '../Palette/PaletteFooter';
 import styles from './styles';
 
 class ColorPalette extends Component {
@@ -19,9 +19,9 @@ class ColorPalette extends Component {
     let shades = [];
     const allColors = palette.colors;
 
-    Object.keys(allColors).forEach(c => {
+    Object.keys(allColors).forEach((c) => {
       shades = shades.concat(
-        allColors[c].filter(color => color.id === colorToFilterBy),
+        allColors[c].filter((color) => color.id === colorToFilterBy),
       );
     });
     // return all shades of given color
@@ -34,9 +34,9 @@ class ColorPalette extends Component {
 
   render() {
     const { format } = this.state;
-    const { palette, classes } = this.props;
-    const { paletteName, emoji, id } = palette;
-    const colorBoxes = this.shades.map(color => (
+    const { classes } = this.props;
+    const { paletteName, emoji, id } = this.props.palette;
+    const colorBoxes = this.shades.map((color) => (
       <ColorBox
         key={color.name}
         name={color.name}
@@ -46,7 +46,7 @@ class ColorPalette extends Component {
     ));
     return (
       <div className={classes.root}>
-        <NavBar
+        <PaletteNavBar
           handleChange={this.changeFormat}
           showingAllColors={false}
           format={format}

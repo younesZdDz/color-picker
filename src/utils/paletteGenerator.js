@@ -8,10 +8,10 @@ function generatePalette(starterPalette) {
     emoji: starterPalette.emoji,
     colors: {},
   };
-  levels.forEach(level => {
+  levels.forEach((level) => {
     newPalette.colors[level] = [];
   });
-  starterPalette.colors.forEach(color => {
+  starterPalette.colors.forEach((color) => {
     const scale = getScale(color.color, 10).reverse();
     scale.forEach((s, i) => {
       newPalette.colors[levels[i]].push({
@@ -19,10 +19,7 @@ function generatePalette(starterPalette) {
         id: color.name.toLowerCase().replace(/ /g, '-'),
         hex: s,
         rgb: chroma(s).css(),
-        rgba: chroma(s)
-          .css()
-          .replace('rgb', 'rgba')
-          .replace(')', ',1.0)'),
+        rgba: chroma(s).css().replace('rgb', 'rgba').replace(')', ',1.0)'),
       });
     });
   });
@@ -31,20 +28,11 @@ function generatePalette(starterPalette) {
 }
 function getRange(hexColor) {
   const end = '#fff';
-  return [
-    chroma(hexColor)
-      .darken(1.4)
-      .hex(),
-    hexColor,
-    end,
-  ];
+  return [chroma(hexColor).darken(1.4).hex(), hexColor, end];
 }
 
 function getScale(hexColor, numberOfColors) {
-  return chroma
-    .scale(getRange(hexColor))
-    .mode('lab')
-    .colors(numberOfColors);
+  return chroma.scale(getRange(hexColor)).mode('lab').colors(numberOfColors);
 }
 
 export { generatePalette };

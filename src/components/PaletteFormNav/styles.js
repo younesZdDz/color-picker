@@ -1,7 +1,7 @@
-import { DRAWER_WIDTH } from '../../constants';
-import sizes from '../../helpers/';
+import { DRAWER_WIDTH } from '../../constants/styles';
+import sizes from '../../utils/mediaQuery';
 
-export default theme => ({
+export default (theme) => ({
   root: {
     display: 'flex',
   },

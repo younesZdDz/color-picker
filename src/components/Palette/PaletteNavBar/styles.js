@@ -1,4 +1,4 @@
-import sizes from '../../helpers';
+import sizes from '../../../utils/mediaQuery';
 
 export default {
   root: {

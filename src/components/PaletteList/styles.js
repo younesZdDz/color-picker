@@ -1,4 +1,4 @@
-import sizes from '../../helpers/';
+import sizes from '../../utils/mediaQuery';
 import bg from '../../assets/bg.svg';
 
 export default {
@@ -18,7 +18,6 @@ export default {
     alignItems: 'flex-start',
     justifyContent: 'center',
     /* background by SVGBackgrounds.com */
-    //backgroundColor: '#394bad',
     backgroundImage: `url(${bg})`,
     overflow: 'scroll',
   },
@@ -43,8 +42,8 @@ export default {
     },
   },
   palettes: {
-    boxSizing: 'border-box',
     width: '100%',
+    margin: '0 0 1.5rem 0',
     display: 'grid',
     gridTemplateColumns: 'repeat(3, 30%)',
     gridGap: '2.5rem',

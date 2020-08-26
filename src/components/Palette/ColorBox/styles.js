@@ -1,9 +1,9 @@
 import chroma from 'chroma-js';
-import sizes from '../../helpers';
+import sizes from '../../../utils/mediaQuery';
 export default {
   ColorBox: {
     width: '20%',
-    height: props => (props.showingFullPalette ? '25%' : '50%'),
+    height: (props) => (props.showingFullPalette ? '25%' : '50%'),
     margin: '0 auto',
     display: 'inline-block',
     position: 'relative',
@@ -14,27 +14,27 @@ export default {
     },
     [sizes.down('lg')]: {
       width: '25%',
-      height: props => (props.showingFullPalette ? '20%' : '33.3333%'),
+      height: (props) => (props.showingFullPalette ? '20%' : '33.3333%'),
     },
     [sizes.down('md')]: {
       width: '50%',
-      height: props => (props.showingFullPalette ? '10%' : '20%'),
+      height: (props) => (props.showingFullPalette ? '10%' : '20%'),
     },
     [sizes.down('xs')]: {
       width: '100%',
-      height: props => (props.showingFullPalette ? '5%' : '10%'),
+      height: (props) => (props.showingFullPalette ? '5%' : '10%'),
     },
   },
   copyText: {
-    color: props =>
+    color: (props) =>
       chroma(props.background).luminance() >= 0.7 ? 'black' : 'white',
   },
   colorName: {
-    color: props =>
+    color: (props) =>
       chroma(props.background).luminance() <= 0.08 ? 'white' : 'black',
   },
   seeMore: {
-    color: props =>
+    color: (props) =>
       chroma(props.background).luminance() >= 0.7 ? 'rgba(0,0,0,0.6)' : 'white',
     background: 'rgba(255, 255, 255, 0.3)',
     position: 'absolute',
@@ -48,7 +48,7 @@ export default {
     textTransform: 'uppercase',
   },
   copyButton: {
-    color: props =>
+    color: (props) =>
       chroma(props.background).luminance() >= 0.7 ? 'rgba(0,0,0,0.6)' : 'white',
     width: '100px',
     height: '30px',

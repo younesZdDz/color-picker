@@ -1,5 +1,6 @@
-import { DRAWER_WIDTH } from '../../constants';
-export default theme => ({
+import { DRAWER_WIDTH } from '../../constants/styles';
+
+export default (theme) => ({
   root: {
     display: 'flex',
   },

@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import Palette from './components/Palette/Palette';
-import seedColors from './constants/seedColors';
-import { generatePalette } from './utils/paletteGenerator';
-import PaletteList from './components/PaletteList/PaletteList';
-import ColorPalette from './components/ColorPalette/ColorPalette';
+import Palette from './components/Palette';
+import PaletteList from './components/PaletteList';
+import ColorPalette from './components/SingleColorPalette';
 import PaletteForm from './components/PaletteForm/PaletteForm';
 import Page from './components/Page/Page';
+import seedColors from './constants/seedColors';
+import { generatePalette } from './utils/paletteGenerator';
 import './App.css';
 
 class App extends React.Component {
@@ -21,27 +21,29 @@ class App extends React.Component {
   }
 
   findPalette(id) {
-    return this.state.palettes.find(palette => palette.id === id);
+    return this.state.palettes.find((palette) => palette.id === id);
   }
 
   savePalette(newPalette) {
     this.setState(
-      { palettes: [...this.state.palettes, newPalette] },
+      (state) => ({
+        palettes: [...state.palettes, newPalette],
+      }),
       this.syncLocalStorage,
     );
   }
 
   deletePalette(id) {
     this.setState(
-      state => ({
-        palettes: state.palettes.filter(palette => palette.id !== id),
+      (state) => ({
+        palettes: state.palettes.filter((palette) => palette.id !== id),
       }),
       this.syncLocalStorage,
     );
   }
 
   syncLocalStorage() {
-    //save palettes to local storage
+    // save palettes to local storage
     window.localStorage.setItem(
       'palettes',
       JSON.stringify(this.state.palettes),
@@ -58,12 +60,12 @@ class App extends React.Component {
                 <Route
                   exact
                   path="/"
-                  render={routeProps => (
+                  render={(routeProps) => (
                     <Page>
                       <PaletteList
                         palettes={this.state.palettes}
-                        {...routeProps}
                         deletePalette={this.deletePalette}
+                        history={routeProps.history}
                       />
                     </Page>
                   )}
@@ -71,12 +73,12 @@ class App extends React.Component {
                 <Route
                   exact
                   path="/palette/new"
-                  render={routeProps => (
+                  render={(routeProps) => (
                     <Page>
                       <PaletteForm
                         savePalette={this.savePalette}
                         palettes={this.state.palettes}
-                        {...routeProps}
+                        history={routeProps.history}
                       />
                     </Page>
                   )}
@@ -84,7 +86,7 @@ class App extends React.Component {
                 <Route
                   exact
                   path="/palette/:id"
-                  render={routeProps => (
+                  render={(routeProps) => (
                     <Page>
                       <Palette
                         palette={generatePalette(
@@ -97,7 +99,7 @@ class App extends React.Component {
                 <Route
                   exact
                   path="/palette/:paletteId/:colorId"
-                  render={routeProps => (
+                  render={(routeProps) => (
                     <Page>
                       <ColorPalette
                         colorId={routeProps.match.params.colorId}
@@ -109,12 +111,12 @@ class App extends React.Component {
                   )}
                 />
                 <Route
-                  render={routeProps => (
+                  render={(routeProps) => (
                     <Page>
                       <PaletteList
                         palettes={this.state.palettes}
                         deletePalette={this.deletePalette}
-                        {...routeProps}
+                        history={routeProps.history}
                       />
                     </Page>
                   )}

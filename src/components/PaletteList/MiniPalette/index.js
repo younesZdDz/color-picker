@@ -1,7 +1,8 @@
-import React, { PureComponent } from 'react';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { withStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
-import DeleteIcon from '@material-ui/icons/Delete';
+import React, { PureComponent } from 'react';
+
 import styles from './styles';
 
 class MiniPalette extends PureComponent {
@@ -10,16 +11,19 @@ class MiniPalette extends PureComponent {
     this.deletePalette = this.deletePalette.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
+
   deletePalette(e) {
     e.stopPropagation();
-    this.props.openDialog(this.props.id);
+    this.props.openDeleteDialog(this.props.id);
   }
+
   handleClick() {
     this.props.goToPalette(this.props.id);
   }
+
   render() {
     const { classes, paletteName, emoji, colors } = this.props;
-    const miniColorBoxes = colors.map(color => (
+    const miniColorBoxes = colors.map((color) => (
       <div
         className={classes.miniColor}
         style={{ backgroundColor: color.color }}
@@ -27,6 +31,7 @@ class MiniPalette extends PureComponent {
       />
     ));
     return (
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       <div className={classes.root} onClick={this.handleClick}>
         <DeleteIcon
           className={classes.deleteIcon}
@@ -45,7 +50,9 @@ MiniPalette.propTypes = {
   paletteName: PropTypes.string.isRequired,
   emoji: PropTypes.string.isRequired,
   colors: PropTypes.array.isRequired,
-  handleClick: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  openDeleteDialog: PropTypes.func.isRequired,
+  goToPalette: PropTypes.func.isRequired,
 };
 
 export default withStyles(styles)(MiniPalette);
