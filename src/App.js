@@ -1,10 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import Palette from './components/Palette';
 import PaletteList from './components/PaletteList';
+import Palette from './components/Palette';
 import ColorPalette from './components/SingleColorPalette';
-import PaletteForm from './components/PaletteForm/PaletteForm';
+import PaletteForm from './components/NewPaletteForm';
 import Page from './components/Page/Page';
 import seedColors from './constants/seedColors';
 import { generatePalette } from './utils/paletteGenerator';

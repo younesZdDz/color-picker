@@ -7,6 +7,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { Picker } from 'emoji-mart';
+import PropTypes from 'prop-types';
 import 'emoji-mart/css/emoji-mart.css';
 
 class PaletteMetaForm extends Component {
@@ -20,28 +21,25 @@ class PaletteMetaForm extends Component {
     this.showEmojiPicker = this.showEmojiPicker.bind(this);
     this.savePalette = this.savePalette.bind(this);
   }
+
   componentDidMount() {
-    ValidatorForm.addValidationRule('isPaletteNameUnique', value =>
+    ValidatorForm.addValidationRule('isPaletteNameUnique', (value) =>
       this.props.palettes.every(
         ({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase(),
       ),
     );
   }
+
   handleChange(evt) {
     this.setState({
       [evt.target.name]: evt.target.value,
     });
   }
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
 
-  handleClose = () => {
-    this.setState({ open: false });
-  };
   showEmojiPicker() {
     this.setState({ stage: 'emoji' });
   }
+
   savePalette(emoji) {
     const newPalette = {
       paletteName: this.state.newPaletteName,
@@ -50,6 +48,7 @@ class PaletteMetaForm extends Component {
     this.setState({ stage: '' });
     this.props.handleSubmit(newPalette);
   }
+
   render() {
     const { newPaletteName, stage } = this.state;
     const { hideForm } = this.props;
@@ -74,7 +73,7 @@ class PaletteMetaForm extends Component {
             <DialogContent>
               <DialogContentText>
                 Please enter a name for your new beautiful palette. Make sure
-                it's unique!
+                it&apos;s unique!
               </DialogContentText>
               <TextValidator
                 label="Palette Name"
@@ -99,4 +98,14 @@ class PaletteMetaForm extends Component {
     );
   }
 }
+
+PaletteMetaForm.propTypes = {
+  palettes: PropTypes.arrayOf(
+    PropTypes.shape({
+      paletteName: PropTypes.string.isRequired,
+    }).isRequired,
+  ),
+  handleSubmit: PropTypes.func.isRequired,
+  hideForm: PropTypes.func.isRequired,
+};
 export default PaletteMetaForm;

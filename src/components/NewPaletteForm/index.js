@@ -1,26 +1,26 @@
-import React, { Component } from 'react';
-import classNames from 'classnames';
-import { withStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+import IconButton from '@material-ui/core/IconButton';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import classNames from 'classnames';
 import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import { arrayMove } from 'react-sortable-hoc';
-import DraggableColorList from '../DraggableColorList/DraggableColorList';
-import PaletteFormNav from '../PaletteFormNav/PaletteFormNav';
-import ColorPickerForm from '../ColorPickerForm/ColorPickerForm';
 import seedColors from '../../constants/seedColors';
+import PaletteFormNav from './PaletteFormNav';
+import ColorPickerForm from './ColorPickerForm';
+import DraggableColorList from './DraggableColorList';
 import styles from './styles';
 
-class NewPaletteForm extends Component {
-  static defaultProps = {
-    maxColors: 20,
-  };
+const defaultProps = {
+  maxColors: 20,
+};
 
+class NewPaletteForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,9 +44,8 @@ class NewPaletteForm extends Component {
   };
 
   addNewColor(newColor) {
-    this.setState(state => ({
+    this.setState((state) => ({
       colors: [...state.colors, newColor],
-      newColorName: '',
     }));
   }
 
@@ -65,7 +64,7 @@ class NewPaletteForm extends Component {
 
   removeColor(colorName) {
     this.setState(({ colors }) => ({
-      colors: colors.filter(color => color.name !== colorName),
+      colors: colors.filter((color) => color.name !== colorName),
     }));
   }
 
@@ -80,7 +79,7 @@ class NewPaletteForm extends Component {
   }
 
   addRandomColor() {
-    const allColors = this.props.palettes.map(p => p.colors).flat();
+    const allColors = this.props.palettes.map((p) => p.colors).flat();
     let rand;
     let randomColor;
     let isDuplicateColor = true;
@@ -88,7 +87,7 @@ class NewPaletteForm extends Component {
       rand = Math.floor(Math.random() * allColors.length);
       randomColor = allColors[rand];
       isDuplicateColor = this.state.colors.some(
-        color => color.name === randomColor.name,
+        (color) => color.name === randomColor.name,
       );
     }
     this.setState(({ colors }) => ({
@@ -168,12 +167,20 @@ class NewPaletteForm extends Component {
             onSortEnd={this.onSortEnd}
             distance={20}
           />
-        </main>
+        </main>{' '}
       </div>
     );
   }
 }
+
+NewPaletteForm.defaultProps = defaultProps;
 NewPaletteForm.propTypes = {
   classes: PropTypes.object.isRequired,
+  maxColors: PropTypes.number,
+  savePalette: PropTypes.func.isRequired,
+  palettes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 export default withStyles(styles, { withTheme: true })(NewPaletteForm);

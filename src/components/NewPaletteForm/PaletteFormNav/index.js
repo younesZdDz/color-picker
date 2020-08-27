@@ -9,13 +9,14 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-import PaletteMetaForm from '../PaletteMetaForm/PaletteMetaForm';
+import PropTypes from 'prop-types';
+import PaletteMetaForm from './PaletteMetaForm';
 import styles from './styles';
 
 class PaletteFormNav extends Component {
   constructor(props) {
     super(props);
-    this.state = { newPaletteName: '', formShowing: false };
+    this.state = { formShowing: false };
     this.handleChange = this.handleChange.bind(this);
     this.showForm = this.showForm.bind(this);
     this.hideForm = this.hideForm.bind(this);
@@ -97,4 +98,12 @@ class PaletteFormNav extends Component {
     );
   }
 }
+
+PaletteFormNav.propTypes = {
+  classes: PropTypes.object.isRequired,
+  open: PropTypes.bool.isRequired,
+  palettes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  handleDrawerOpen: PropTypes.func.isRequired,
+};
 export default withStyles(styles, { withTheme: true })(PaletteFormNav);

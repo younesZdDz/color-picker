@@ -1,5 +1,5 @@
 import chroma from 'chroma-js';
-import sizes from '../../utils/mediaQuery';
+import sizes from '../../../../utils/mediaQuery';
 
 export default {
   root: {
