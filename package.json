@@ -9,8 +9,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "npm run lint:js",
-    "lint:eslint": "eslint --ignore-path .gitignore",
-    "lint:eslint:fix": "eslint --ignore-path .gitignore --fix",
+    "lint:eslint": "./node_modules/.bin/eslint --ignore-path .gitignore",
+    "lint:eslint:fix": "./node_modules/.bin/eslint --ignore-path .gitignore --fix",
     "lint:js": "npm run lint:eslint -- . ",
     "lint:staged": "lint-staged",
     "prettify": "prettier --write"
@@ -24,6 +24,14 @@
       "prettier --write",
       "git add --force"
     ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -50,13 +58,23 @@
     "react-transition-group": "^4.4.1"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.12.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.22.0",
+    "eslint-config-react-app": "^6.0.0",
+    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.0",
+    "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-react": "^7.20.6",
-    "eslint-plugin-react-hooks": "^4.1.0",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-testing-library": "^3.9.2",
+    "husky": "^4.3.0",
     "lint-staged": "^10.2.13",
     "prettier": "^2.1.1"
   },

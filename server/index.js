@@ -18,7 +18,7 @@ app.use(compression());
 app.use(publicPath, express.static(outputPath));
 
 app.get('*', (req, res) =>
-  res.sendFile(path.resolve(outputPath, 'index.html')),
+	res.sendFile(path.resolve(outputPath, 'index.html'))
 );
 
 // get the intended host and port number, use localhost and port 3000 if not provided
@@ -29,15 +29,15 @@ const customPort = process.env.PORT;
 const port = customPort || null;
 // use the gzipped bundle
 app.get('*.js', (req, res, next) => {
-  req.url = req.url + '.gz'; // eslint-disable-line
-  res.set('Content-Encoding', 'gzip');
-  next();
+	req.url = req.url + '.gz'; // eslint-disable-line
+	res.set('Content-Encoding', 'gzip');
+	next();
 });
 
 // Start your app.
-app.listen(port, host, async err => {
-  if (err) {
-    return logger.error(err.message);
-  }
-  logger.appStarted(port, host);
+app.listen(port, host, async (err) => {
+	if (err) {
+		return logger.error(err.message);
+	}
+	logger.appStarted(port, host);
 });
