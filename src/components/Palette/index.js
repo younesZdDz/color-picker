@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 import ColorBox from './ColorBox';
@@ -6,49 +6,42 @@ import PaletteNavBar from './PaletteNavBar';
 import PaletteFooter from './PaletteFooter';
 import styles from './styles';
 
-class Palette extends Component {
-	constructor(props) {
-		super(props);
-		this.state = { level: 500, format: 'hex' };
-		this.changeLevel = this.changeLevel.bind(this);
-		this.changeFormat = this.changeFormat.bind(this);
-	}
+function Palette({ palette, classes }) {
+	const [format, setFormat] = useState('hex');
+	const [level, setLevel] = useState(500);
 
-	changeLevel(level) {
-		this.setState({ level });
-	}
+	const changeLevel = (value) => {
+		setLevel(value);
+	};
 
-	changeFormat(value) {
-		this.setState({ format: value });
-	}
+	const changeFormat = (value) => {
+		setFormat(value);
+	};
 
-	render() {
-		const { palette, classes } = this.props;
-		const { colors, paletteName, emoji, id } = palette;
-		const { level, format } = this.state;
-		const colorBoxes = colors[level].map((color) => (
-			<ColorBox
-				key={color.id}
-				background={color[format]}
-				name={color.name}
-				moreUrl={`/palette/${id}/${color.id}`}
-				showingFullPalette
+	const { colors, paletteName, emoji, id } = palette;
+	const colorBoxes = colors[level].map((color) => (
+		<ColorBox
+			key={color.id}
+			background={color[format]}
+			name={color.name}
+			moreUrl={`/palette/${id}/${color.id}`}
+			showingFullPalette
+		/>
+	));
+
+	return (
+		<div className={classes.root}>
+			<PaletteNavBar
+				level={level}
+				format={format}
+				changeLevel={changeLevel}
+				handleChange={changeFormat}
+				showingAllColors
 			/>
-		));
-		return (
-			<div className={classes.root}>
-				<PaletteNavBar
-					level={level}
-					format={format}
-					changeLevel={this.changeLevel}
-					handleChange={this.changeFormat}
-					showingAllColors
-				/>
-				<div className={classes.paletteColors}>{colorBoxes}</div>
-				<PaletteFooter paletteName={paletteName} emoji={emoji} />
-			</div>
-		);
-	}
+			<div className={classes.paletteColors}>{colorBoxes}</div>
+			<PaletteFooter paletteName={paletteName} emoji={emoji} />
+		</div>
+	);
 }
 Palette.propTypes = {
 	palette: PropTypes.shape({

@@ -22,9 +22,7 @@ function App() {
 		syncLocalStorage();
 	}, [palettes]);
 
-	const findPalette = (id) => {
-		palettes.find((palette) => palette.id === id);
-	};
+	const findPalette = (id) => palettes.find((palette) => palette.id === id);
 
 	const savePalette = (newPalette) => {
 		setPalletes((p) => [...p, newPalette]);

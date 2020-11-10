@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 import styles from './styles';
 
-function PaletteFooter(props) {
-	const { paletteName, emoji, classes } = props;
+function PaletteFooter({ paletteName, emoji, classes }) {
 	return (
 		<footer className={classes.root}>
 			{paletteName}
