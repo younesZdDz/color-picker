@@ -13,13 +13,7 @@ import PropTypes from 'prop-types';
 import PaletteMetaForm from './PaletteMetaForm';
 import styles from './styles';
 
-function PaletteFormNav({
-	classes,
-	open,
-	palettes,
-	handleSubmit,
-	handleDrawerOpen
-}) {
+function PaletteFormNav({ classes, open, handleSubmit, handleDrawerOpen }) {
 	const [formShowing, setFormShowing] = useState(false);
 
 	const showForm = () => {
@@ -78,7 +72,6 @@ function PaletteFormNav({
 			</AppBar>
 			{formShowing && (
 				<PaletteMetaForm
-					palettes={palettes}
 					handleSubmit={handleSubmit}
 					hideForm={hideForm}
 				/>
@@ -90,7 +83,6 @@ function PaletteFormNav({
 PaletteFormNav.propTypes = {
 	classes: PropTypes.object.isRequired,
 	open: PropTypes.bool.isRequired,
-	palettes: PropTypes.arrayOf(PropTypes.object).isRequired,
 	handleSubmit: PropTypes.func.isRequired,
 	handleDrawerOpen: PropTypes.func.isRequired
 };

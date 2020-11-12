@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { withStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -16,8 +16,15 @@ import blue from '@material-ui/core/colors/blue';
 import red from '@material-ui/core/colors/red';
 import MiniPalette from './MiniPalette';
 import styles from './styles';
+import {
+	DispatchContext,
+	PaletteContext
+} from '../../contexts/palette.context';
 
-function PaletteList(props) {
+function PaletteList({ classes, history }) {
+	const dispatch = useContext(DispatchContext);
+	const palettes = useContext(PaletteContext);
+
 	const [state, setState] = useState({
 		openDelDialog: false,
 		deletingId: ''
@@ -32,15 +39,14 @@ function PaletteList(props) {
 	};
 
 	const goToPalette = (id) => {
-		props.history.push(`/palette/${id}`);
+		history.push(`/palette/${id}`);
 	};
 
 	const handleDelete = () => {
-		props.deletePalette(state.deletingId);
+		dispatch({ type: 'DELETE', id: state.deletingId });
 		closeDeleteDialog();
 	};
 
-	const { palettes, classes } = props;
 	const { openDelDialog } = state;
 
 	return (
@@ -115,20 +121,6 @@ PaletteList.propTypes = {
 	history: PropTypes.shape({
 		push: PropTypes.func.isRequired
 	}).isRequired,
-	palettes: PropTypes.arrayOf(
-		PropTypes.shape({
-			paletteName: PropTypes.string.isRequired,
-			id: PropTypes.string.isRequired,
-			emoji: PropTypes.string.isRequired,
-			colors: PropTypes.arrayOf(
-				PropTypes.shape({
-					name: PropTypes.string.isRequired,
-					color: PropTypes.string.isRequired
-				})
-			).isRequired
-		})
-	),
-	deletePalette: PropTypes.func.isRequired,
 	classes: PropTypes.object.isRequired
 };
 

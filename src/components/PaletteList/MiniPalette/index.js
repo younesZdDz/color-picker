@@ -5,17 +5,24 @@ import React from 'react';
 
 import styles from './styles';
 
-function MiniPalette(props) {
+function MiniPalette({
+	id,
+	paletteName,
+	emoji,
+	colors,
+	classes,
+	openDeleteDialog,
+	goToPalette
+}) {
 	const deletePalette = (e) => {
 		e.stopPropagation();
-		props.openDeleteDialog(props.id);
+		openDeleteDialog(id);
 	};
 
 	const handleClick = () => {
-		props.goToPalette(props.id);
+		goToPalette(id);
 	};
 
-	const { classes, paletteName, emoji, colors } = props;
 	const miniColorBoxes = colors.map((color) => (
 		<div
 			className={classes.miniColor}

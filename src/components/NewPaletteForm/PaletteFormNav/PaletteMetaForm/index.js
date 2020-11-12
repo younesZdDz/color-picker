@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -9,8 +9,11 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { Picker } from 'emoji-mart';
 import PropTypes from 'prop-types';
 import 'emoji-mart/css/emoji-mart.css';
+import { PaletteContext } from '../../../../contexts/palette.context';
 
-function PaletteMetaForm({ palettes, handleSubmit, hideForm }) {
+function PaletteMetaForm({ handleSubmit, hideForm }) {
+	const palettes = useContext(PaletteContext);
+
 	const [state, setState] = useState({
 		stage: 'form',
 		newPaletteName: ''
@@ -97,11 +100,6 @@ function PaletteMetaForm({ palettes, handleSubmit, hideForm }) {
 }
 
 PaletteMetaForm.propTypes = {
-	palettes: PropTypes.arrayOf(
-		PropTypes.shape({
-			paletteName: PropTypes.string.isRequired
-		}).isRequired
-	),
 	handleSubmit: PropTypes.func.isRequired,
 	hideForm: PropTypes.func.isRequired
 };

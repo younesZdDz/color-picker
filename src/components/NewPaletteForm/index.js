@@ -8,25 +8,26 @@ import Typography from '@material-ui/core/Typography';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { arrayMove } from 'react-sortable-hoc';
 import seedColors from '../../constants/seedColors';
 import PaletteFormNav from './PaletteFormNav';
 import ColorPickerForm from './ColorPickerForm';
 import DraggableColorList from './DraggableColorList';
 import styles from './styles';
+import {
+	DispatchContext,
+	PaletteContext
+} from '../../contexts/palette.context';
 
 const defaultProps = {
 	maxColors: 20
 };
 
-function NewPaletteForm({
-	palettes,
-	classes,
-	maxColors,
-	savePalette,
-	history
-}) {
+function NewPaletteForm({ classes, maxColors, history }) {
+	const dispatch = useContext(DispatchContext);
+	const palettes = useContext(PaletteContext);
+
 	const [open, setOpen] = useState(true);
 	const [colors, setColors] = useState(seedColors[0].colors);
 
@@ -47,7 +48,7 @@ function NewPaletteForm({
 		newPalette.id = newPalette.paletteName.toLowerCase().replace(/ /g, '-');
 		// eslint-disable-next-line no-param-reassign
 		newPalette.colors = colors;
-		savePalette(newPalette);
+		dispatch({ type: 'ADD', newPalette });
 		history.push('/');
 	};
 
@@ -86,7 +87,6 @@ function NewPaletteForm({
 			<CssBaseline />
 			<PaletteFormNav
 				open={open}
-				palettes={palettes}
 				handleSubmit={handleSubmit}
 				handleDrawerOpen={handleDrawerOpen}
 			/>
@@ -157,8 +157,6 @@ NewPaletteForm.defaultProps = defaultProps;
 NewPaletteForm.propTypes = {
 	classes: PropTypes.object.isRequired,
 	maxColors: PropTypes.number,
-	savePalette: PropTypes.func.isRequired,
-	palettes: PropTypes.arrayOf(PropTypes.object).isRequired,
 	history: PropTypes.shape({
 		push: PropTypes.func.isRequired
 	}).isRequired

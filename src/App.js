@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 import PaletteList from './components/PaletteList';
@@ -6,36 +6,14 @@ import Palette from './components/Palette';
 import ColorPalette from './components/SingleColorPalette';
 import PaletteForm from './components/NewPaletteForm';
 import Page from './components/Page/Page';
-import seedColors from './constants/seedColors';
 import { generatePalette } from './utils/paletteGenerator';
+import { PaletteContext } from './contexts/palette.context';
 import './App.css';
 
 function App() {
-	const [palettes, setPalletes] = useState(() => {
-		const savedPalettes = JSON.parse(
-			window.localStorage.getItem('palettes')
-		);
-		return savedPalettes || seedColors;
-	});
-
-	useEffect(() => {
-		syncLocalStorage();
-	}, [palettes]);
+	const palettes = useContext(PaletteContext);
 
 	const findPalette = (id) => palettes.find((palette) => palette.id === id);
-
-	const savePalette = (newPalette) => {
-		setPalletes((p) => [...p, newPalette]);
-	};
-
-	const deletePalette = (id) => {
-		setPalletes((p) => p.filter((palette) => palette.id !== id));
-	};
-
-	const syncLocalStorage = () => {
-		// save palettes to local storage
-		window.localStorage.setItem('palettes', JSON.stringify(palettes));
-	};
 
 	return (
 		<Route
@@ -53,8 +31,6 @@ function App() {
 								render={(routeProps) => (
 									<Page>
 										<PaletteList
-											palettes={palettes}
-											deletePalette={deletePalette}
 											history={routeProps.history}
 										/>
 									</Page>
@@ -66,8 +42,6 @@ function App() {
 								render={(routeProps) => (
 									<Page>
 										<PaletteForm
-											savePalette={savePalette}
-											palettes={palettes}
 											history={routeProps.history}
 										/>
 									</Page>
@@ -111,8 +85,6 @@ function App() {
 								render={(routeProps) => (
 									<Page>
 										<PaletteList
-											palettes={palettes}
-											deletePalette={deletePalette}
 											history={routeProps.history}
 										/>
 									</Page>
