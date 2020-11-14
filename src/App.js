@@ -1,6 +1,7 @@
 import React, { useContext, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import Helmet from 'react-helmet';
 import Page from './components/Page/Page';
 import { generatePalette } from './utils/paletteGenerator';
 import { PaletteContext } from './contexts/palette.context';
@@ -34,6 +35,13 @@ function App() {
 								path="/"
 								render={(routeProps) => (
 									<Page>
+										<Helmet>
+											<title>Color-picker</title>
+											<meta
+												name="description"
+												content="List of color palettes"
+											/>
+										</Helmet>
 										<ErrorBoundary>
 											<Suspense fallback={<Loading />}>
 												<PaletteList
@@ -49,6 +57,16 @@ function App() {
 								path="/palette/new"
 								render={(routeProps) => (
 									<Page>
+										<Helmet>
+											<title>
+												Create new palette |
+												Color-picker
+											</title>
+											<meta
+												name="description"
+												content="Create a new palette"
+											/>
+										</Helmet>
 										<ErrorBoundary>
 											<Suspense fallback={<Loading />}>
 												<PaletteForm
@@ -62,51 +80,81 @@ function App() {
 							<Route
 								exact
 								path="/palette/:id"
-								render={(routeProps) => (
-									<Page>
-										<ErrorBoundary>
-											<Suspense fallback={<Loading />}>
-												<Palette
-													palette={generatePalette(
-														findPalette(
-															routeProps.match
-																.params.id
-														)
-													)}
+								render={(routeProps) => {
+									const palette = generatePalette(
+										findPalette(routeProps.match.params.id)
+									);
+									return (
+										<Page>
+											<Helmet>
+												<title>
+													{`${palette.paletteName} | Color-picker`}
+												</title>
+												<meta
+													name="description"
+													content={`Color details of ${palette.paletteName}`}
 												/>
-											</Suspense>
-										</ErrorBoundary>
-									</Page>
-								)}
+											</Helmet>
+											<ErrorBoundary>
+												<Suspense
+													fallback={<Loading />}
+												>
+													<Palette
+														palette={palette}
+													/>
+												</Suspense>
+											</ErrorBoundary>
+										</Page>
+									);
+								}}
 							/>
 							<Route
 								exact
 								path="/palette/:paletteId/:colorId"
-								render={(routeProps) => (
-									<Page>
-										<ErrorBoundary>
-											<Suspense fallback={<Loading />}>
-												<ColorPalette
-													colorId={
-														routeProps.match.params
-															.colorId
-													}
-													palette={generatePalette(
-														findPalette(
-															routeProps.match
-																.params
-																.paletteId
-														)
-													)}
+								render={(routeProps) => {
+									const palette = generatePalette(
+										findPalette(
+											routeProps.match.params.paletteId
+										)
+									);
+									return (
+										<Page>
+											<Helmet>
+												<title>
+													{`${routeProps.match.params.colorId} | Color-picker`}
+												</title>
+												<meta
+													name="description"
+													content={`Variants of color details of ${routeProps.match.params.colorId}`}
 												/>
-											</Suspense>
-										</ErrorBoundary>
-									</Page>
-								)}
+											</Helmet>
+											<ErrorBoundary>
+												<Suspense
+													fallback={<Loading />}
+												>
+													<ColorPalette
+														colorId={
+															routeProps.match
+																.params.colorId
+														}
+														palette={palette}
+													/>
+												</Suspense>
+											</ErrorBoundary>
+										</Page>
+									);
+								}}
 							/>
 							<Route
 								render={(routeProps) => (
 									<Page>
+										<Helmet>
+											<title>Color-picker</title>
+											<meta
+												name="description"
+												content="List of color palettes"
+											/>
+										</Helmet>
 										<ErrorBoundary>
 											<Suspense fallback={<Loading />}>
 												<PaletteList
