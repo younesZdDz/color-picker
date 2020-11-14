@@ -60,4 +60,4 @@ ColorBox.propTypes = {
 	classes: PropType.object.isRequired
 };
 
-export default withStyles(styles)(ColorBox);
+export default React.memo(withStyles(styles)(ColorBox));

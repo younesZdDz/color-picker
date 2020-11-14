@@ -25,7 +25,7 @@ function PaletteMetaForm({ handleSubmit, hideForm }) {
 					paletteName.toLowerCase() !== value.toLowerCase()
 			)
 		);
-	}, []);
+	}, [palettes]);
 
 	const handleChange = (evt) => {
 		setState((s) => ({

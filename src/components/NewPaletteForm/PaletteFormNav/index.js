@@ -23,7 +23,6 @@ function PaletteFormNav({ classes, open, handleSubmit, handleDrawerOpen }) {
 	const hideForm = () => {
 		setFormShowing(false);
 	};
-
 	return (
 		<div className={classes.root}>
 			<CssBaseline />
@@ -86,4 +85,6 @@ PaletteFormNav.propTypes = {
 	handleSubmit: PropTypes.func.isRequired,
 	handleDrawerOpen: PropTypes.func.isRequired
 };
-export default withStyles(styles, { withTheme: true })(PaletteFormNav);
+export default React.memo(
+	withStyles(styles, { withTheme: true })(PaletteFormNav)
+);

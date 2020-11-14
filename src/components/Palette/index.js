@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/styles';
 import ColorBox from './ColorBox';
@@ -10,13 +10,19 @@ function Palette({ palette, classes }) {
 	const [format, setFormat] = useState('hex');
 	const [level, setLevel] = useState(500);
 
-	const changeLevel = (value) => {
-		setLevel(value);
-	};
+	const changeLevel = useCallback(
+		(value) => {
+			setLevel(value);
+		},
+		[setLevel]
+	);
 
-	const changeFormat = (value) => {
-		setFormat(value);
-	};
+	const changeFormat = useCallback(
+		(value) => {
+			setFormat(value);
+		},
+		[setFormat]
+	);
 
 	const { colors, paletteName, emoji, id } = palette;
 	const colorBoxes = colors[level].map((color) => (

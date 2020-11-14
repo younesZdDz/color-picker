@@ -16,4 +16,4 @@ PaletteFooter.propTypes = {
 	emoji: PropTypes.string.isRequired,
 	classes: PropTypes.object.isRequired
 };
-export default withStyles(styles)(PaletteFooter);
+export default React.memo(withStyles(styles)(PaletteFooter));

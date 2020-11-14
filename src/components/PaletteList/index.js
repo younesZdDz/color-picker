@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useCallback } from 'react';
 import { withStyles } from '@material-ui/styles';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -30,17 +30,23 @@ function PaletteList({ classes, history }) {
 		deletingId: ''
 	});
 
-	const openDeleteDialog = (id) => {
-		setState({ openDelDialog: true, deletingId: id });
-	};
+	const openDeleteDialog = useCallback(
+		(id) => {
+			setState({ openDelDialog: true, deletingId: id });
+		},
+		[setState]
+	);
 
 	const closeDeleteDialog = () => {
 		setState({ openDelDialog: false, deletingId: '' });
 	};
 
-	const goToPalette = (id) => {
-		history.push(`/palette/${id}`);
-	};
+	const goToPalette = useCallback(
+		(id) => {
+			history.push(`/palette/${id}`);
+		},
+		[history]
+	);
 
 	const handleDelete = () => {
 		dispatch({ type: 'DELETE', id: state.deletingId });

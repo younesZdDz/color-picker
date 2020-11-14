@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useCallback } from 'react';
 import { arrayMove } from 'react-sortable-hoc';
 import seedColors from '../../constants/seedColors';
 import PaletteFormNav from './PaletteFormNav';
@@ -31,9 +31,9 @@ function NewPaletteForm({ classes, maxColors, history }) {
 	const [open, setOpen] = useState(true);
 	const [colors, setColors] = useState(seedColors[0].colors);
 
-	const handleDrawerOpen = () => {
+	const handleDrawerOpen = useCallback(() => {
 		setOpen(true);
-	};
+	}, [setOpen]);
 
 	const handleDrawerClose = () => {
 		setOpen(false);
@@ -43,14 +43,19 @@ function NewPaletteForm({ classes, maxColors, history }) {
 		setColors((c) => [...c, newColor]);
 	};
 
-	const handleSubmit = (newPalette) => {
-		// eslint-disable-next-line no-param-reassign
-		newPalette.id = newPalette.paletteName.toLowerCase().replace(/ /g, '-');
-		// eslint-disable-next-line no-param-reassign
-		newPalette.colors = colors;
-		dispatch({ type: 'ADD', newPalette });
-		history.push('/');
-	};
+	const handleSubmit = useCallback(
+		(newPalette) => {
+			// eslint-disable-next-line no-param-reassign
+			newPalette.id = newPalette.paletteName
+				.toLowerCase()
+				.replace(/ /g, '-');
+			// eslint-disable-next-line no-param-reassign
+			newPalette.colors = colors;
+			dispatch({ type: 'ADD', newPalette });
+			history.push('/');
+		},
+		[colors, dispatch, history]
+	);
 
 	const removeColor = (colorName) => {
 		setColors((c) => c.filter((color) => color.name !== colorName));

@@ -92,4 +92,4 @@ NavBar.propTypes = {
 	showingAllColors: PropTypes.bool.isRequired,
 	classes: PropTypes.object.isRequired
 };
-export default withStyles(styles)(NavBar);
+export default React.memo(withStyles(styles)(NavBar));
