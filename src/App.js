@@ -1,14 +1,17 @@
-import React, { useContext } from 'react';
+import React, { useContext, Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import PaletteList from './components/PaletteList';
-import Palette from './components/Palette';
-import ColorPalette from './components/SingleColorPalette';
-import PaletteForm from './components/NewPaletteForm';
 import Page from './components/Page/Page';
 import { generatePalette } from './utils/paletteGenerator';
 import { PaletteContext } from './contexts/palette.context';
 import './App.css';
+import Loading from './components/Loading';
+const PaletteList = React.lazy(() => import('./components/PaletteList'));
+const Palette = React.lazy(() => import('./components/Palette'));
+const PaletteForm = React.lazy(() => import('./components/NewPaletteForm'));
+const ColorPalette = React.lazy(() =>
+	import('./components/SingleColorPalette')
+);
 
 function App() {
 	const palettes = useContext(PaletteContext);
@@ -30,9 +33,11 @@ function App() {
 								path="/"
 								render={(routeProps) => (
 									<Page>
-										<PaletteList
-											history={routeProps.history}
-										/>
+										<Suspense fallback={<Loading />}>
+											<PaletteList
+												history={routeProps.history}
+											/>
+										</Suspense>
 									</Page>
 								)}
 							/>
@@ -41,9 +46,11 @@ function App() {
 								path="/palette/new"
 								render={(routeProps) => (
 									<Page>
-										<PaletteForm
-											history={routeProps.history}
-										/>
+										<Suspense fallback={<Loading />}>
+											<PaletteForm
+												history={routeProps.history}
+											/>
+										</Suspense>
 									</Page>
 								)}
 							/>
@@ -52,13 +59,16 @@ function App() {
 								path="/palette/:id"
 								render={(routeProps) => (
 									<Page>
-										<Palette
-											palette={generatePalette(
-												findPalette(
-													routeProps.match.params.id
-												)
-											)}
-										/>
+										<Suspense fallback={<Loading />}>
+											<Palette
+												palette={generatePalette(
+													findPalette(
+														routeProps.match.params
+															.id
+													)
+												)}
+											/>
+										</Suspense>
 									</Page>
 								)}
 							/>
@@ -67,26 +77,31 @@ function App() {
 								path="/palette/:paletteId/:colorId"
 								render={(routeProps) => (
 									<Page>
-										<ColorPalette
-											colorId={
-												routeProps.match.params.colorId
-											}
-											palette={generatePalette(
-												findPalette(
+										<Suspense fallback={<Loading />}>
+											<ColorPalette
+												colorId={
 													routeProps.match.params
-														.paletteId
-												)
-											)}
-										/>
+														.colorId
+												}
+												palette={generatePalette(
+													findPalette(
+														routeProps.match.params
+															.paletteId
+													)
+												)}
+											/>
+										</Suspense>
 									</Page>
 								)}
 							/>
 							<Route
 								render={(routeProps) => (
 									<Page>
-										<PaletteList
-											history={routeProps.history}
-										/>
+										<Suspense fallback={<Loading />}>
+											<PaletteList
+												history={routeProps.history}
+											/>
+										</Suspense>
 									</Page>
 								)}
 							/>
