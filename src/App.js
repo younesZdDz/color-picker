@@ -6,6 +6,7 @@ import { generatePalette } from './utils/paletteGenerator';
 import { PaletteContext } from './contexts/palette.context';
 import './App.css';
 import Loading from './components/Loading';
+import ErrorBoundary from './components/ErrorBoundary';
 const PaletteList = React.lazy(() => import('./components/PaletteList'));
 const Palette = React.lazy(() => import('./components/Palette'));
 const PaletteForm = React.lazy(() => import('./components/NewPaletteForm'));
@@ -33,11 +34,13 @@ function App() {
 								path="/"
 								render={(routeProps) => (
 									<Page>
-										<Suspense fallback={<Loading />}>
-											<PaletteList
-												history={routeProps.history}
-											/>
-										</Suspense>
+										<ErrorBoundary>
+											<Suspense fallback={<Loading />}>
+												<PaletteList
+													history={routeProps.history}
+												/>
+											</Suspense>
+										</ErrorBoundary>
 									</Page>
 								)}
 							/>
@@ -46,11 +49,13 @@ function App() {
 								path="/palette/new"
 								render={(routeProps) => (
 									<Page>
-										<Suspense fallback={<Loading />}>
-											<PaletteForm
-												history={routeProps.history}
-											/>
-										</Suspense>
+										<ErrorBoundary>
+											<Suspense fallback={<Loading />}>
+												<PaletteForm
+													history={routeProps.history}
+												/>
+											</Suspense>
+										</ErrorBoundary>
 									</Page>
 								)}
 							/>
@@ -59,16 +64,18 @@ function App() {
 								path="/palette/:id"
 								render={(routeProps) => (
 									<Page>
-										<Suspense fallback={<Loading />}>
-											<Palette
-												palette={generatePalette(
-													findPalette(
-														routeProps.match.params
-															.id
-													)
-												)}
-											/>
-										</Suspense>
+										<ErrorBoundary>
+											<Suspense fallback={<Loading />}>
+												<Palette
+													palette={generatePalette(
+														findPalette(
+															routeProps.match
+																.params.id
+														)
+													)}
+												/>
+											</Suspense>
+										</ErrorBoundary>
 									</Page>
 								)}
 							/>
@@ -77,31 +84,36 @@ function App() {
 								path="/palette/:paletteId/:colorId"
 								render={(routeProps) => (
 									<Page>
-										<Suspense fallback={<Loading />}>
-											<ColorPalette
-												colorId={
-													routeProps.match.params
-														.colorId
-												}
-												palette={generatePalette(
-													findPalette(
+										<ErrorBoundary>
+											<Suspense fallback={<Loading />}>
+												<ColorPalette
+													colorId={
 														routeProps.match.params
-															.paletteId
-													)
-												)}
-											/>
-										</Suspense>
+															.colorId
+													}
+													palette={generatePalette(
+														findPalette(
+															routeProps.match
+																.params
+																.paletteId
+														)
+													)}
+												/>
+											</Suspense>
+										</ErrorBoundary>
 									</Page>
 								)}
 							/>
 							<Route
 								render={(routeProps) => (
 									<Page>
-										<Suspense fallback={<Loading />}>
-											<PaletteList
-												history={routeProps.history}
-											/>
-										</Suspense>
+										<ErrorBoundary>
+											<Suspense fallback={<Loading />}>
+												<PaletteList
+													history={routeProps.history}
+												/>
+											</Suspense>
+										</ErrorBoundary>
 									</Page>
 								)}
 							/>
