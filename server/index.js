@@ -1,5 +1,4 @@
-/* eslint consistent-return:0 import/order:0 */
-
+/* eslint-disable @typescript-eslint/no-var-requires */
 const express = require('express');
 const path = require('path');
 const compression = require('compression');
@@ -17,9 +16,7 @@ const outputPath = path.resolve(process.cwd(), 'build');
 app.use(compression());
 app.use(publicPath, express.static(outputPath));
 
-app.get('*', (req, res) =>
-	res.sendFile(path.resolve(outputPath, 'index.html'))
-);
+app.get('*', (req, res) => res.sendFile(path.resolve(outputPath, 'index.html')));
 
 // get the intended host and port number, use localhost and port 3000 if not provided
 const customHost = process.env.HOST;
@@ -30,14 +27,14 @@ const port = customPort || null;
 // use the gzipped bundle
 app.get('*.js', (req, res, next) => {
 	req.url = req.url + '.gz'; // eslint-disable-line
-	res.set('Content-Encoding', 'gzip');
-	next();
+    res.set('Content-Encoding', 'gzip');
+    next();
 });
 
 // Start your app.
 app.listen(port, host, async (err) => {
-	if (err) {
-		return logger.error(err.message);
-	}
-	logger.appStarted(port, host);
+    if (err) {
+        return logger.error(err.message);
+    }
+    logger.appStarted(port, host);
 });

@@ -8,23 +8,14 @@ export const PaletteContext = createContext();
 export const DispatchContext = createContext();
 
 export function PalettesProvider(props) {
-	const [palettes, dispatch] = useLocalStorageReducer(
-		'palettes',
-		seedColors,
-		paletteReducer
-	);
-	return (
-		<DispatchContext.Provider value={dispatch}>
-			<PaletteContext.Provider value={palettes}>
-				{props.children}
-			</PaletteContext.Provider>
-		</DispatchContext.Provider>
-	);
+    const [palettes, dispatch] = useLocalStorageReducer('palettes', seedColors, paletteReducer);
+    return (
+        <DispatchContext.Provider value={dispatch}>
+            <PaletteContext.Provider value={palettes}>{props.children}</PaletteContext.Provider>
+        </DispatchContext.Provider>
+    );
 }
 
 PalettesProvider.propTypes = {
-	children: PropTypes.oneOfType([
-		PropTypes.arrayOf(PropTypes.node),
-		PropTypes.node
-	]).isRequired
+    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
 };

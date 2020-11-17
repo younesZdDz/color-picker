@@ -5,12 +5,12 @@ import App from './App';
 import { PalettesProvider } from './contexts/palette.context';
 
 ReactDOM.render(
-	<BrowserRouter>
-		<React.StrictMode>
-			<PalettesProvider>
-				<App />
-			</PalettesProvider>
-		</React.StrictMode>
-	</BrowserRouter>,
-	document.getElementById('root')
+    <BrowserRouter>
+        <React.StrictMode>
+            <PalettesProvider>
+                <App />
+            </PalettesProvider>
+        </React.StrictMode>
+    </BrowserRouter>,
+    document.getElementById('root'),
 );
