@@ -1,6 +1,3 @@
-const fs = require('fs');
-const path = require('path');
-
 module.exports = {
     env: {
         jest: true,
@@ -18,7 +15,7 @@ module.exports = {
     },
     settings: {
         react: {
-            version: 'detect', 
+            version: 'detect',
         },
     },
     extends: [
@@ -29,7 +26,13 @@ module.exports = {
         'plugin:prettier/recommended',
     ],
     plugins: ['prettier', 'react', 'react-hooks'],
-    rules: {
-      
-    },
+    rules: {},
+    overrides: [
+        {
+            files: ['**/*.tsx'],
+            rules: {
+                'react/prop-types': 'off',
+            },
+        },
+    ],
 };
