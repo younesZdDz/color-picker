@@ -1,3 +1,5 @@
+import { BasicPaletteType } from '../types';
+
 export default [
     {
         paletteName: 'Material UI Colors',
@@ -241,4 +243,4 @@ export default [
             { name: 'ReefEncounter', color: '#079992' },
         ],
     },
-];
+] as BasicPaletteType[];

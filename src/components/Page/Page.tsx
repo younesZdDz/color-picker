@@ -1,11 +1,29 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Suspense } from 'react';
+import Helmet from 'react-helmet';
+import ErrorBoundary from '../ErrorBoundary';
+
 import './style.css';
 
-const Page: React.FC = ({ children }) => {
-    return <section className="page">{children}</section>;
+interface Props {
+    title: string;
+    description: string;
+    errorImage: string;
+    fallback: NonNullable<React.ReactNode>;
+}
+const Page: React.FC<Props> = ({ title, description, errorImage, fallback, children }) => {
+    return (
+        <>
+            <Helmet>
+                <title>{title}</title>
+                <meta name="description" content={description} />
+            </Helmet>
+            <ErrorBoundary errorImage={errorImage}>
+                <Suspense fallback={fallback}>
+                    <section className="page">{children}</section>;
+                </Suspense>
+            </ErrorBoundary>
+        </>
+    );
 };
-Page.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-};
+
 export default Page;

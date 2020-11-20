@@ -1,18 +1,17 @@
-import React, { useContext, Suspense } from 'react';
+import React, { useContext } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
-import Helmet from 'react-helmet';
 import Page from './components/Page/Page';
 import { generatePalette } from './utils/paletteGenerator';
 import { PaletteContext } from './contexts/palette.context';
-import './App.css';
 import Loading from './components/Loading';
-import ErrorBoundary from './components/ErrorBoundary';
 import { BasicPaletteType } from './types';
 const PaletteList = React.lazy(() => import('./components/PaletteList'));
 const Palette = React.lazy(() => import('./components/Palette'));
 const PaletteForm = React.lazy(() => import('./components/NewPaletteForm'));
 const ColorPalette = React.lazy(() => import('./components/SingleColorPalette'));
+import './App.css';
+import errorImage from './assets/500.svg';
 
 const App: React.FC = () => {
     const palettes = useContext(PaletteContext);
@@ -34,16 +33,13 @@ const App: React.FC = () => {
                                 exact
                                 path="/"
                                 render={(routeProps) => (
-                                    <Page>
-                                        <Helmet>
-                                            <title>Color-picker</title>
-                                            <meta name="description" content="List of color palettes" />
-                                        </Helmet>
-                                        <ErrorBoundary>
-                                            <Suspense fallback={<Loading />}>
-                                                <PaletteList history={routeProps.history} />
-                                            </Suspense>
-                                        </ErrorBoundary>
+                                    <Page
+                                        title="Color-picker"
+                                        description="List of color palettes"
+                                        fallback={<Loading />}
+                                        errorImage={errorImage}
+                                    >
+                                        <PaletteList history={routeProps.history} />
                                     </Page>
                                 )}
                             />
@@ -51,16 +47,13 @@ const App: React.FC = () => {
                                 exact
                                 path="/palette/new"
                                 render={(routeProps) => (
-                                    <Page>
-                                        <Helmet>
-                                            <title>Create new palette | Color-picker</title>
-                                            <meta name="description" content="Create a new palette" />
-                                        </Helmet>
-                                        <ErrorBoundary>
-                                            <Suspense fallback={<Loading />}>
-                                                <PaletteForm history={routeProps.history} />
-                                            </Suspense>
-                                        </ErrorBoundary>
+                                    <Page
+                                        title="Create new palette | Color-picker"
+                                        description="Create a new palette"
+                                        fallback={<Loading />}
+                                        errorImage={errorImage}
+                                    >
+                                        <PaletteForm history={routeProps.history} />
                                     </Page>
                                 )}
                             />
@@ -68,63 +61,54 @@ const App: React.FC = () => {
                                 exact
                                 path="/palette/:id"
                                 render={(routeProps) => {
-                                    const palette = generatePalette(findPalette(routeProps.match.params.id)!);
-                                    return (
-                                        <Page>
-                                            <Helmet>
-                                                <title>{`${palette.paletteName} | Color-picker`}</title>
-                                                <meta
-                                                    name="description"
-                                                    content={`Color details of ${palette.paletteName}`}
-                                                />
-                                            </Helmet>
-                                            <ErrorBoundary>
-                                                <Suspense fallback={<Loading />}>
-                                                    <Palette palette={palette} />
-                                                </Suspense>
-                                            </ErrorBoundary>
-                                        </Page>
-                                    );
+                                    const basicPalette = findPalette(routeProps.match.params.id);
+                                    if (basicPalette) {
+                                        const palette = generatePalette(basicPalette);
+                                        return (
+                                            <Page
+                                                title={`${palette.paletteName} | Color-picker`}
+                                                description={`Color details of ${palette.paletteName}`}
+                                                fallback={<Loading />}
+                                                errorImage={errorImage}
+                                            >
+                                                <Palette palette={palette} />
+                                            </Page>
+                                        );
+                                    }
                                 }}
                             />
                             <Route
                                 exact
                                 path="/palette/:paletteId/:colorId"
                                 render={(routeProps) => {
-                                    const palette = generatePalette(findPalette(routeProps.match.params.paletteId)!);
-                                    return (
-                                        <Page>
-                                            <Helmet>
-                                                <title>{`${routeProps.match.params.colorId} | Color-picker`}</title>
-                                                <meta
-                                                    name="description"
-                                                    content={`Variants of color details of ${routeProps.match.params.colorId}`}
+                                    const basicPalette = findPalette(routeProps.match.params.paletteId);
+                                    if (basicPalette) {
+                                        const palette = generatePalette(basicPalette);
+                                        return (
+                                            <Page
+                                                title={`${routeProps.match.params.colorId} | Color-picker`}
+                                                description={`Variants of color details of ${routeProps.match.params.colorId}`}
+                                                fallback={<Loading />}
+                                                errorImage={errorImage}
+                                            >
+                                                <ColorPalette
+                                                    colorId={routeProps.match.params.colorId}
+                                                    palette={palette}
                                                 />
-                                            </Helmet>
-                                            <ErrorBoundary>
-                                                <Suspense fallback={<Loading />}>
-                                                    <ColorPalette
-                                                        colorId={routeProps.match.params.colorId}
-                                                        palette={palette}
-                                                    />
-                                                </Suspense>
-                                            </ErrorBoundary>
-                                        </Page>
-                                    );
+                                            </Page>
+                                        );
+                                    }
                                 }}
                             />
                             <Route
                                 render={(routeProps) => (
-                                    <Page>
-                                        <Helmet>
-                                            <title>Color-picker</title>
-                                            <meta name="description" content="List of color palettes" />
-                                        </Helmet>
-                                        <ErrorBoundary>
-                                            <Suspense fallback={<Loading />}>
-                                                <PaletteList history={routeProps.history} />
-                                            </Suspense>
-                                        </ErrorBoundary>
+                                    <Page
+                                        title="Color-picker"
+                                        description="List of color palettes"
+                                        fallback={<Loading />}
+                                        errorImage={errorImage}
+                                    >
+                                        <PaletteList history={routeProps.history} />
                                     </Page>
                                 )}
                             />

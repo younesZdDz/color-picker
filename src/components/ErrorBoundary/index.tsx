@@ -1,8 +1,6 @@
-/* eslint-disable react/no-unused-state */
 import React, { Component, ErrorInfo } from 'react';
 import { withStyles, createStyles } from '@material-ui/core/styles';
 import { WithStyles } from '@material-ui/core';
-import errorImage from '../../assets/500.svg';
 
 const styles = createStyles({
     root: {
@@ -19,7 +17,9 @@ const styles = createStyles({
     },
 });
 
-type Props = WithStyles<typeof styles>;
+interface Props extends WithStyles<typeof styles> {
+    errorImage: string;
+}
 
 interface State {
     error: Error | null;
@@ -42,7 +42,7 @@ class ErrorBoundary extends Component<Props, State> {
 
     render() {
         if (this.state.errorInfo) {
-            const { classes } = this.props;
+            const { classes, errorImage } = this.props;
             // Error path
             return (
                 <div className={classes.root}>

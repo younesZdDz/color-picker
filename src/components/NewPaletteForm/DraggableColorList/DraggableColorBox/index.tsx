@@ -1,14 +1,12 @@
 import React from 'react';
 import { withStyles } from '@material-ui/styles';
-import PropTypes from 'prop-types';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { SortableElement } from 'react-sortable-hoc';
 import styles from './styles';
 import { WithStyles } from '@material-ui/core';
+import { BasicColorType } from '../../../../types';
 
-interface Props extends WithStyles<typeof styles> {
-    name: string;
-    color: string;
+interface Props extends WithStyles<typeof styles>, BasicColorType {
     removeColor: () => void;
 }
 const colorBox: React.FC<Props> = ({ name, color, classes, removeColor }) => (

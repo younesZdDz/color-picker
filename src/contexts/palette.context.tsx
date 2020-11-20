@@ -1,5 +1,4 @@
 import React, { createContext } from 'react';
-import PropTypes from 'prop-types';
 import { useLocalStorageReducer } from '../hooks/useLocalStorageReducer';
 import paletteReducer from '../reducers/palette.reducer';
 import seedColors from '../constants/seedColors';
@@ -15,8 +14,4 @@ export const PalettesProvider: React.FC = ({ children }) => {
             <PaletteContext.Provider value={palettes}>{children}</PaletteContext.Provider>
         </DispatchContext.Provider>
     );
-};
-
-PalettesProvider.propTypes = {
-    children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
 };

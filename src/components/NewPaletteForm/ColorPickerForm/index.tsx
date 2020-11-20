@@ -4,11 +4,12 @@ import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { ChromePicker } from 'react-color';
 import { WithStyles, withStyles } from '@material-ui/core/styles';
 import styles from './styles';
+import { BasicColorType } from '../../../types';
 
 interface Props extends WithStyles<typeof styles> {
     paletteIsFull: boolean;
-    colors: { name: string; color: string }[];
-    addNewColor: (newColor: { name: string; color: string }) => void;
+    colors: BasicColorType[];
+    addNewColor: (newColor: BasicColorType) => void;
 }
 interface State {
     currentColor: string;

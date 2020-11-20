@@ -24,8 +24,8 @@ interface Props extends WithStyles<typeof styles> {
     maxColors?: number;
 }
 const NewPaletteForm: React.FC<Props> = ({ classes, maxColors = 20, history }) => {
-    const dispatch = useContext(DispatchContext)!;
-    const palettes = useContext(PaletteContext)!;
+    const dispatch = useContext(DispatchContext);
+    const palettes = useContext(PaletteContext);
 
     const [open, setOpen] = useState(true);
     const [colors, setColors] = useState(seedColors[0].colors);
@@ -48,7 +48,7 @@ const NewPaletteForm: React.FC<Props> = ({ classes, maxColors = 20, history }) =
             newPalette.id = newPalette.paletteName.toLowerCase().replace(/ /g, '-');
             // eslint-disable-next-line no-param-reassign
             newPalette.colors = colors;
-            dispatch({ type: 'ADD', newPalette });
+            dispatch && dispatch({ type: 'ADD', newPalette });
             history.push('/');
         },
         [colors, dispatch, history],
@@ -67,22 +67,24 @@ const NewPaletteForm: React.FC<Props> = ({ classes, maxColors = 20, history }) =
     };
 
     const addRandomColor = () => {
-        const allColors = palettes.map((p) => p.colors).flat();
-        let rand;
-        let randomColor: {
-            name: string;
-            color: string;
-        };
-        let isDuplicateColor = true;
-        while (isDuplicateColor) {
-            rand = Math.floor(Math.random() * allColors.length);
-            randomColor = allColors[rand];
-            isDuplicateColor = colors.some(
-                // eslint-disable-next-line no-loop-func
-                (color) => color.name === randomColor.name,
-            );
+        if (palettes) {
+            const allColors = palettes.map((p) => p.colors).flat();
+            let rand;
+            let randomColor: {
+                name: string;
+                color: string;
+            };
+            let isDuplicateColor = true;
+            while (isDuplicateColor) {
+                rand = Math.floor(Math.random() * allColors.length);
+                randomColor = allColors[rand];
+                isDuplicateColor = colors.some(
+                    // eslint-disable-next-line no-loop-func
+                    (color) => color.name === randomColor.name,
+                );
+            }
+            setColors((c) => [...c, randomColor]);
         }
-        setColors((c) => [...c, randomColor]);
     };
 
     const paletteIsFull = colors.length >= maxColors;

@@ -6,7 +6,7 @@ import ColorBox from '../Palette/ColorBox';
 import PaletteNavBar from '../Palette/PaletteNavBar';
 import PaletteFooter from '../Palette/PaletteFooter';
 import styles from './styles';
-import { PaletteWithLevelsType } from '../../types';
+import { ColorFormat, ExtendedColorType, PaletteWithLevelsType } from '../../types';
 
 interface Props extends WithStyles<typeof styles> {
     palette: PaletteWithLevelsType;
@@ -14,15 +14,9 @@ interface Props extends WithStyles<typeof styles> {
 }
 
 const ColorPalette: React.FC<Props> = ({ palette, colorId, classes }) => {
-    const [format, setFormat] = useState<'hex' | 'rgb' | 'rgba'>('hex');
+    const [format, setFormat] = useState<ColorFormat>('hex');
     const gatherShades = (inPalette: PaletteWithLevelsType, colorToFilterBy: string) => {
-        let shades: {
-            name: string;
-            id: string;
-            hex: string;
-            rgb: string;
-            rgba: string;
-        }[] = [];
+        let shades: ExtendedColorType[] = [];
         const allColors = inPalette.colors;
 
         Object.keys(allColors).forEach((c) => {
@@ -31,7 +25,7 @@ const ColorPalette: React.FC<Props> = ({ palette, colorId, classes }) => {
         // return all shades of given color
         return shades.slice(1);
     };
-    const changeFormat = (val: 'hex' | 'rgb' | 'rgba') => {
+    const changeFormat = (val: ColorFormat) => {
         setFormat(val);
     };
     const shades = gatherShades(palette, colorId);

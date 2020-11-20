@@ -5,14 +5,14 @@ import ColorBox from './ColorBox';
 import PaletteNavBar from './PaletteNavBar';
 import PaletteFooter from './PaletteFooter';
 import styles from './styles';
-import { PaletteWithLevelsType } from '../../types';
+import { ColorFormat, PaletteWithLevelsType } from '../../types';
 
 interface Props extends WithStyles<typeof styles> {
     palette: PaletteWithLevelsType;
 }
 
 const Palette: React.FC<Props> = ({ palette, classes }) => {
-    const [format, setFormat] = useState<'hex' | 'rgb' | 'rgba'>('hex');
+    const [format, setFormat] = useState<ColorFormat>('hex');
     const [level, setLevel] = useState(500);
 
     const changeLevel = useCallback(
@@ -23,7 +23,7 @@ const Palette: React.FC<Props> = ({ palette, classes }) => {
     );
 
     const changeFormat = useCallback(
-        (value: 'hex' | 'rgb' | 'rgba') => {
+        (value: ColorFormat) => {
             setFormat(value);
         },
         [setFormat],

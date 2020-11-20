@@ -11,10 +11,11 @@ import { withStyles } from '@material-ui/styles';
 import { WithStyles } from '@material-ui/core';
 
 import styles from './styles';
+import { ColorFormat } from '../../../types';
 
 interface Props extends WithStyles<typeof styles> {
     format: string;
-    handleChange: (value: 'hex' | 'rgb' | 'rgba') => void;
+    handleChange: (value: ColorFormat) => void;
     showingAllColors: boolean;
     level?: number;
     changeLevel?: (value: number) => void;

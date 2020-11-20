@@ -13,19 +13,19 @@ import CloseIcon from '@material-ui/icons/Close';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import blue from '@material-ui/core/colors/blue';
 import red from '@material-ui/core/colors/red';
+import { WithStyles } from '@material-ui/core';
+import { History } from 'history';
 import MiniPalette from './MiniPalette';
 import styles from './styles';
 import { DispatchContext, PaletteContext } from '../../contexts/palette.context';
-import { WithStyles } from '@material-ui/core';
-import { History } from 'history';
 
 interface Props extends WithStyles<typeof styles> {
     history: History;
 }
 
 const PaletteList: React.FC<Props> = ({ classes, history }) => {
-    const dispatch = useContext(DispatchContext)!;
-    const palettes = useContext(PaletteContext)!;
+    const dispatch = useContext(DispatchContext);
+    const palettes = useContext(PaletteContext);
 
     const [state, setState] = useState({
         openDelDialog: false,
@@ -51,8 +51,10 @@ const PaletteList: React.FC<Props> = ({ classes, history }) => {
     );
 
     const handleDelete = () => {
-        dispatch({ type: 'DELETE', id: state.deletingId });
-        closeDeleteDialog();
+        if (dispatch) {
+            dispatch({ type: 'DELETE', id: state.deletingId });
+            closeDeleteDialog();
+        }
     };
 
     const { openDelDialog } = state;
@@ -65,19 +67,20 @@ const PaletteList: React.FC<Props> = ({ classes, history }) => {
                     <Link to="/palette/new">Create Palette</Link>
                 </nav>
                 <TransitionGroup className={classes.palettes}>
-                    {palettes.map((palette) => (
-                        <CSSTransition key={palette.id} classNames="fade" timeout={500}>
-                            <MiniPalette
-                                key={palette.id}
-                                goToPalette={goToPalette}
-                                openDeleteDialog={openDeleteDialog}
-                                id={palette.id}
-                                paletteName={palette.paletteName}
-                                emoji={palette.emoji}
-                                colors={palette.colors}
-                            />
-                        </CSSTransition>
-                    ))}
+                    {palettes &&
+                        palettes.map((palette) => (
+                            <CSSTransition key={palette.id} classNames="fade" timeout={500}>
+                                <MiniPalette
+                                    key={palette.id}
+                                    goToPalette={goToPalette}
+                                    openDeleteDialog={openDeleteDialog}
+                                    id={palette.id}
+                                    paletteName={palette.paletteName}
+                                    emoji={palette.emoji}
+                                    colors={palette.colors}
+                                />
+                            </CSSTransition>
+                        ))}
                 </TransitionGroup>
             </div>
             <Dialog open={openDelDialog} aria-labelledby="delete-dialog-title">

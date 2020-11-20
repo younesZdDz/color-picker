@@ -7,7 +7,6 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { Picker, BaseEmoji } from 'emoji-mart';
-import PropTypes from 'prop-types';
 import 'emoji-mart/css/emoji-mart.css';
 import { PaletteContext } from '../../../../contexts/palette.context';
 import { BasicPaletteType } from '../../../../types';
@@ -17,16 +16,18 @@ interface Props {
     hideForm: () => void;
 }
 const PaletteMetaForm: React.FC<Props> = ({ handleSubmit, hideForm }) => {
-    const palettes = useContext(PaletteContext)!;
+    const palettes = useContext(PaletteContext);
 
     const [state, setState] = useState({
         stage: 'form',
         newPaletteName: '',
     });
     useEffect(() => {
-        ValidatorForm.addValidationRule('isPaletteNameUnique', (value) =>
-            palettes.every(({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()),
-        );
+        if (palettes) {
+            ValidatorForm.addValidationRule('isPaletteNameUnique', (value) =>
+                palettes.every(({ paletteName }) => paletteName.toLowerCase() !== value.toLowerCase()),
+            );
+        }
     }, [palettes]);
 
     const handleChange = (evt: React.ChangeEvent<{ name: string; value: string }>) => {
@@ -85,8 +86,4 @@ const PaletteMetaForm: React.FC<Props> = ({ handleSubmit, hideForm }) => {
     );
 };
 
-PaletteMetaForm.propTypes = {
-    handleSubmit: PropTypes.func.isRequired,
-    hideForm: PropTypes.func.isRequired,
-};
 export default PaletteMetaForm;

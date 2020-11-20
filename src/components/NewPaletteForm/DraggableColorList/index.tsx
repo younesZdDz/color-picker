@@ -1,9 +1,10 @@
 import React from 'react';
 import { SortableContainer } from 'react-sortable-hoc';
+import { BasicColorType } from '../../../types';
 import DraggableColorBox from './DraggableColorBox';
 
 interface Props {
-    colors: { name: string; color: string }[];
+    colors: BasicColorType[];
     removeColor: (colorName: string) => void;
 }
 const colorList: React.FC<Props> = ({ colors, removeColor }) => (
