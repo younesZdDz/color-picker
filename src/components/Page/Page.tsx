@@ -12,17 +12,17 @@ interface Props {
 }
 const Page: React.FC<Props> = ({ title, description, errorImage, fallback, children }) => {
     return (
-        <>
+        <div className="page">
             <Helmet>
                 <title>{title}</title>
                 <meta name="description" content={description} />
             </Helmet>
             <ErrorBoundary errorImage={errorImage}>
                 <Suspense fallback={fallback}>
-                    <section className="page">{children}</section>;
+                    <section>{children}</section>;
                 </Suspense>
             </ErrorBoundary>
-        </>
+        </div>
     );
 };
 
