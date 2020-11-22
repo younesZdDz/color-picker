@@ -1,3 +1,4 @@
+import classes from '*.module.css';
 import React, { Suspense } from 'react';
 import Helmet from 'react-helmet';
 import ErrorBoundary from '../ErrorBoundary';
@@ -19,7 +20,7 @@ const Page: React.FC<Props> = ({ title, description, errorImage, fallback, child
             </Helmet>
             <ErrorBoundary errorImage={errorImage}>
                 <Suspense fallback={fallback}>
-                    <section>{children}</section>;
+                    <section className="section">{children}</section>;
                 </Suspense>
             </ErrorBoundary>
         </div>

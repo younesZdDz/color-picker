@@ -12,6 +12,7 @@ const PaletteForm = React.lazy(() => import('./components/NewPaletteForm'));
 const ColorPalette = React.lazy(() => import('./components/SingleColorPalette'));
 import './App.css';
 import errorImage from './assets/500.svg';
+import NotFound from './components/NotFound';
 
 const App: React.FC = () => {
     const palettes = useContext(PaletteContext);
@@ -101,14 +102,14 @@ const App: React.FC = () => {
                                 }}
                             />
                             <Route
-                                render={(routeProps) => (
+                                render={() => (
                                     <Page
-                                        title="Color-picker"
-                                        description="List of color palettes"
+                                        title="Oop, something lost"
+                                        description="Page not found"
                                         fallback={<Loading />}
                                         errorImage={errorImage}
                                     >
-                                        <PaletteList history={routeProps.history} />
+                                        <NotFound />
                                     </Page>
                                 )}
                             />
