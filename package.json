@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node server/index.js",
-    "dev": "react-scripts start",
+    "dev": "PORT=5000 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -40,6 +40,7 @@
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.1.2",
     "@testing-library/user-event": "^12.2.2",
+    "axios": "^0.21.0",
     "chalk": "^4.1.0",
     "chroma-js": "^2.1.0",
     "compression": "^1.7.4",
@@ -59,7 +60,6 @@
     "react-transition-group": "^4.4.1"
   },
   "devDependencies": {
-    "typescript": "^4.0.5",
     "@types/chroma-js": "^2.1.2",
     "@types/classnames": "^2.2.11",
     "@types/emoji-mart": "^3.0.4",
@@ -83,7 +83,8 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "husky": "^4.3.0",
     "lint-staged": "^10.5.1",
-    "prettier": "^2.1.2"
+    "prettier": "^2.1.2",
+    "typescript": "^4.0.5"
   },
   "browserslist": {
     "production": [

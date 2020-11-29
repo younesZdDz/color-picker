@@ -16,6 +16,7 @@ import red from '@material-ui/core/colors/red';
 import { WithStyles } from '@material-ui/core';
 import { History } from 'history';
 import MiniPalette from './MiniPalette';
+import NavBar from './NavBar';
 import styles from './styles';
 import { DispatchContext, PaletteContext } from '../../contexts/palette.context';
 
@@ -61,11 +62,13 @@ const PaletteList: React.FC<Props> = ({ classes, history }) => {
 
     return (
         <div className={classes.root}>
+            <NavBar />
+
             <div className={classes.container}>
-                <nav className={classes.nav}>
+                {/*<nav className={classes.nav}>
                     <h1>Color Picker</h1>
                     <Link to="/palette/new">Create Palette</Link>
-                </nav>
+    </nav>*/}
                 <TransitionGroup className={classes.palettes}>
                     {palettes &&
                         palettes.map((palette) => (

@@ -26,3 +26,5 @@ export type PaletteState = BasicPaletteType[];
 export type PaletteAction = { type: 'ADD'; newPalette: BasicPaletteType } | { type: 'DELETE'; id: string };
 
 export type Reducer<State, Action> = (prevState: State, action: Action) => State;
+
+export type AuthType = { userId: string; isAuth: boolean };

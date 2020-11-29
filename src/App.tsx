@@ -13,6 +13,7 @@ const ColorPalette = React.lazy(() => import('./components/SingleColorPalette'))
 import './App.css';
 import errorImage from './assets/500.svg';
 import NotFound from './components/NotFound';
+import Login from './components/Login';
 
 const App: React.FC = () => {
     const palettes = useContext(PaletteContext);
@@ -32,6 +33,21 @@ const App: React.FC = () => {
                         <Switch location={location}>
                             <Route
                                 exact
+                                path="/auth"
+                                render={() => (
+                                    <Page
+                                        title="Color-picker login"
+                                        description="login to Color-picker"
+                                        fallback={<Loading />}
+                                        errorImage={errorImage}
+                                        requireLogin={false}
+                                    >
+                                        <Login />
+                                    </Page>
+                                )}
+                            />
+                            <Route
+                                exact
                                 path="/"
                                 render={(routeProps) => (
                                     <Page
@@ -39,6 +55,7 @@ const App: React.FC = () => {
                                         description="List of color palettes"
                                         fallback={<Loading />}
                                         errorImage={errorImage}
+                                        requireLogin={true}
                                     >
                                         <PaletteList history={routeProps.history} />
                                     </Page>
@@ -53,6 +70,7 @@ const App: React.FC = () => {
                                         description="Create a new palette"
                                         fallback={<Loading />}
                                         errorImage={errorImage}
+                                        requireLogin={true}
                                     >
                                         <PaletteForm history={routeProps.history} />
                                     </Page>
@@ -71,6 +89,7 @@ const App: React.FC = () => {
                                                 description={`Color details of ${palette.paletteName}`}
                                                 fallback={<Loading />}
                                                 errorImage={errorImage}
+                                                requireLogin={true}
                                             >
                                                 <Palette palette={palette} />
                                             </Page>
@@ -91,6 +110,7 @@ const App: React.FC = () => {
                                                 description={`Variants of color details of ${routeProps.match.params.colorId}`}
                                                 fallback={<Loading />}
                                                 errorImage={errorImage}
+                                                requireLogin={true}
                                             >
                                                 <ColorPalette
                                                     colorId={routeProps.match.params.colorId}
@@ -108,6 +128,7 @@ const App: React.FC = () => {
                                         description="Page not found"
                                         fallback={<Loading />}
                                         errorImage={errorImage}
+                                        requireLogin={false}
                                     >
                                         <NotFound />
                                     </Page>
