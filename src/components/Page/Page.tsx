@@ -23,8 +23,11 @@ const Page: React.FC<Props> = ({ title, description, errorImage, fallback, child
     useEffect(() => {
         const fetchAuth = async () => {
             const res = await axios.get(`${config.API_URI}/api/v1/auth/current_user`, { withCredentials: true });
+            console.log(res);
+
             if (res.data && setAuth) {
                 setAuth({ ...res.data, isAuth: true });
+                console.log(auth);
             }
             setIsMounting(false);
         };

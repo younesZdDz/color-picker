@@ -38,6 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const NavBar: React.FC = () => {
+    const auth = useContext(AuthContext);
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -91,7 +92,7 @@ const NavBar: React.FC = () => {
                             open={open}
                             onClose={handleClose}
                         >
-                            <MenuItem onClick={handleClose}>Profile</MenuItem>
+                            <MenuItem onClick={handleClose}>{auth.displayName || 'user'}</MenuItem>
                             <MenuItem onClick={logout}>logout</MenuItem>
                         </Menu>
                     </div>
