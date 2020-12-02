@@ -27,4 +27,4 @@ export type PaletteAction = { type: 'ADD'; newPalette: BasicPaletteType } | { ty
 
 export type Reducer<State, Action> = (prevState: State, action: Action) => State;
 
-export type AuthType = { userId: string; displayName?: string; isAuth: boolean };
+export type AuthType = { userId: string; displayName?: string; photo?: string; isAuth: boolean };
