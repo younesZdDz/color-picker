@@ -18,6 +18,8 @@ import { DispatchContext, PaletteContext } from '../../contexts/palette.context'
 import { WithStyles } from '@material-ui/core';
 import { History } from 'history';
 import { BasicPaletteType } from '../../types';
+import config from '../../config';
+import axios from 'axios';
 
 interface Props extends WithStyles<typeof styles> {
     history: History;
@@ -28,7 +30,7 @@ const NewPaletteForm: React.FC<Props> = ({ classes, maxColors = 20, history }) =
     const palettes = useContext(PaletteContext);
 
     const [open, setOpen] = useState(true);
-    const [colors, setColors] = useState(seedColors[0].colors);
+    const [colors, setColors] = useState(seedColors.colors);
 
     const handleDrawerOpen = useCallback(() => {
         setOpen(true);
@@ -43,11 +45,15 @@ const NewPaletteForm: React.FC<Props> = ({ classes, maxColors = 20, history }) =
     };
 
     const handleSubmit = useCallback(
-        (newPalette: BasicPaletteType) => {
+        async (newPalette: BasicPaletteType) => {
             // eslint-disable-next-line no-param-reassign
-            newPalette.id = newPalette.paletteName.toLowerCase().replace(/ /g, '-');
+            // newPalette.id = newPalette.paletteName.toLowerCase().replace(/ /g, '-');
             // eslint-disable-next-line no-param-reassign
             newPalette.colors = colors;
+            const res = await axios.post(`${config.API_URI}/api/v1/palettes/add`, newPalette, {
+                withCredentials: true,
+            });
+            newPalette.id = res.data.id;
             dispatch && dispatch({ type: 'ADD', newPalette });
             history.push('/');
         },

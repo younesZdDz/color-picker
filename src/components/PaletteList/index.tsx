@@ -14,12 +14,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import blue from '@material-ui/core/colors/blue';
 import red from '@material-ui/core/colors/red';
 import { WithStyles } from '@material-ui/core';
+import axios from 'axios';
 import { History } from 'history';
 import MiniPalette from './MiniPalette';
 import NavBar from './NavBar';
 import styles from './styles';
 import { DispatchContext, PaletteContext } from '../../contexts/palette.context';
-
+import config from '../../config';
 interface Props extends WithStyles<typeof styles> {
     history: History;
 }
@@ -51,9 +52,13 @@ const PaletteList: React.FC<Props> = ({ classes, history }) => {
         [history],
     );
 
-    const handleDelete = () => {
+    const handleDelete = async () => {
         if (dispatch) {
-            dispatch({ type: 'DELETE', id: state.deletingId });
+            const id = state.deletingId;
+            await axios.delete(`${config.API_URI}/api/v1/palettes/delete/${id}`, {
+                withCredentials: true,
+            });
+            dispatch({ type: 'DELETE', id });
             closeDeleteDialog();
         }
     };
