@@ -23,7 +23,10 @@ export interface PaletteWithLevelsType extends GeneralPaletteType {
     colors: Record<string, ExtendedColorType[]>;
 }
 export type PaletteState = BasicPaletteType[];
-export type PaletteAction = { type: 'ADD'; newPalette: BasicPaletteType } | { type: 'DELETE'; id: string };
+export type PaletteAction =
+    | { type: 'SET'; palettes: BasicPaletteType[] }
+    | { type: 'ADD'; newPalette: BasicPaletteType }
+    | { type: 'DELETE'; id: string };
 
 export type Reducer<State, Action> = (prevState: State, action: Action) => State;
 

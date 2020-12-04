@@ -72,7 +72,7 @@ const NavBar: React.FC = () => {
                             onClick={handleMenu}
                             color="inherit"
                         >
-                            {auth.photo ? <Avatar alt="Profile photo" src={auth.photo} /> : <AccountCircle />}
+                            {auth && auth.photo ? <Avatar alt="Profile photo" src={auth.photo} /> : <AccountCircle />}
                         </IconButton>
                         <Menu
                             id="menu-appbar"
@@ -89,7 +89,9 @@ const NavBar: React.FC = () => {
                             open={open}
                             onClose={handleClose}
                         >
-                            <MenuItem onClick={handleClose}>{auth.displayName || 'user'}</MenuItem>
+                            <MenuItem onClick={handleClose}>
+                                {auth && auth.displayName ? auth.displayName : 'user'}
+                            </MenuItem>
                             <MenuItem onClick={logout}>logout</MenuItem>
                         </Menu>
                     </div>
