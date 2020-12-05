@@ -14,17 +14,17 @@ export default createStyles({
     },
 
     root: {
-        height: '100vh',
         display: 'flex',
-        alignItems: 'flex-start',
+        flexDirection: 'column',
+        alignItems: 'center',
         justifyContent: 'center',
         /* background by SVGBackgrounds.com */
         backgroundImage: `url(${bg})`,
-        overflow: 'scroll',
     },
     container: {
         width: '60%',
         display: 'flex',
+        marginTop: '1.5rem',
         alignItems: 'flex-start',
         flexDirection: 'column',
         flexWrap: 'wrap',
