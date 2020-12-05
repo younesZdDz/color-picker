@@ -12,7 +12,6 @@ export const PalettesProvider: React.FC = ({ children }) => {
     useEffect(() => {
         const fetchPalettes = async () => {
             const res = await axios.get(`${config.API_URI}/api/v1/palettes`, { withCredentials: true });
-            console.log(res);
             dispatch({ type: 'SET', palettes: res.data });
         };
         fetchPalettes();
