@@ -26,14 +26,13 @@ const Page: React.FC<Props> = ({ title, description, errorImage, fallback, child
             [fallback]
         ) : (
             <>
-                {' '}
                 <Helmet>
                     <title>{title}</title>
                     <meta name="description" content={description} />
                 </Helmet>
                 <ErrorBoundary errorImage={errorImage}>
                     <Suspense fallback={fallback}>
-                        <section className="section">{children}</section>;
+                        <section className="section">{children}</section>
                     </Suspense>
                 </ErrorBoundary>
             </>
